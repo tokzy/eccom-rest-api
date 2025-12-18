@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/tokzy/eccom-rest-api/internal/products"
 )
 
 type application struct {
@@ -26,6 +27,10 @@ func (app *application) mount() http.Handler {
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("hi"))
 	})
+
+	productHandler := products.NewHandler(nil)
+	r.Get("/products", productHandler.ListProducts)
+
 	return r
 }
 
@@ -37,7 +42,7 @@ func (app *application) run(h http.Handler) error {
 		ReadTimeout:  time.Second * 10,
 		IdleTimeout:  time.Minute,
 	}
-	log.Println("server started at address %s", app.config.addr)
+	log.Printf("server started at address %s", app.config.addr)
 	return srv.ListenAndServe()
 }
 
@@ -47,5 +52,5 @@ type config struct {
 }
 
 type dbConfig struct {
-	dsn string
+	//dsn string
 }
