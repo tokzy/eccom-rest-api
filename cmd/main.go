@@ -1,13 +1,20 @@
 package main
 
+import (
+	"log"
+	"os"
+)
+
 func main() {
 	cfg := config{
-	addr: ":8090",
-	db: dbConfig{
-
-	},	
+		addr: ":8090",
+		db:   dbConfig{},
 	}
-	api := application {
+	api := application{
 		config: cfg,
+	}
+	if err := api.run(api.mount()); err != nil {
+		log.Printf("server fail to start, err: %s", err)
+		os.Exit(1)
 	}
 }
