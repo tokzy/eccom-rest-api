@@ -14,7 +14,7 @@ func main() {
 	cfg := config{
 		addr: ":8090",
 		db: dbConfig{
-			dsn: env.GetString("GOOSE_DBSTRING", "host=localhost user=nurudeenadams password=jehovah205 dbname=goecomm sslmode=disable"),
+			dsn: env.GetString("GOOSE_DBSTRING", ""),
 		},
 	}
 
