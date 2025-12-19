@@ -7,11 +7,14 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/jackc/pgx/v5"
+	repo "github.com/tokzy/eccom-rest-api/internal/adapters/sqlc"
 	"github.com/tokzy/eccom-rest-api/internal/products"
 )
 
 type application struct {
 	config config
+	db     *pgx.Conn
 }
 
 func (app *application) mount() http.Handler {
@@ -28,7 +31,7 @@ func (app *application) mount() http.Handler {
 		w.Write([]byte("hi"))
 	})
 
-	productService := products.NewService()
+	productService := products.NewService(repo.New(app.db))
 	productHandler := products.NewHandler(productService)
 	r.Get("/products", productHandler.ListProducts)
 
@@ -53,5 +56,5 @@ type config struct {
 }
 
 type dbConfig struct {
-	//dsn string
+	dsn string
 }
