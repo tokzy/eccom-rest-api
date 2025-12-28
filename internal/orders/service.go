@@ -65,5 +65,6 @@ func (s *svc) PlaceOrder(ctx context.Context, tempOrder createOrderParams) (repo
 			return repo.Order{}, err
 		}
 	}
+	tx.Commit(ctx)
 	return order, nil
 }
