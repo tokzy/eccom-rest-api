@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	ErrorProductNotFound = errors.New("Product Not Found")
+	ErrorProductNotFound = errors.New("product Not Found")
 	ErrorProductNoStock  = errors.New("product has not enough stock")
 )
 
